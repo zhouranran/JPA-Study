@@ -10,8 +10,8 @@
         <module name="JPA-Study-OneToMany" />
         <module name="JPA-Study-ManyToOne" />
         <module name="JPA-Study-Cache" />
-        <module name="JPA-Study-CRUD" />
         <module name="JPA-Study-JPQL" />
+        <module name="JPA-Study-CRUD" />
       </profile>
     </annotationProcessing>
   </component>
