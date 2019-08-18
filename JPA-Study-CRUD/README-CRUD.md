@@ -1,59 +1,64 @@
-# lambda-star
-
-1：lambda的简单使用
-
-     lambda 是JDK1.8的新特性，它的简单表达如下：
-      * {parameters}-> expression (表达式方式)
-      * {parameters}-> {statements;} (语句块)
+# JPA-Study-CRUD
+1：JPA核心API简介
+    
+    /**
+     * 核心API的简介
+     * Persistence   主要是创建EntityManagerFactory, 根据传入的   <persistence-unit name="cn.com.star">名称来创建相应的factory
+     * EntityManagerFactory  EntityManger 工厂负责创建EntityManager
+     * EntityManager    实体管理对象 调用具体的 persist merge remove find findAll
+     * EntityTransaction 事务管理对象 
+     * EntityTransaction 为javax.persistence.EntityTransaction
+     * 此类只能空值同一数据库不同表，大多数都使用这各类
+     * JTA Transaction 为javax.transaction.Transaction
+     * 此类可以处理不同数据库的事务。 事务列表list, 当list为true时提交事务
+     */
      
-     lambda 的重要特性:
-      * 可选类型声明: 不需要声明参数类型， 编译器会统一识别参数类型
-      * 可选的参数圆括号：一个参数无需定义圆括号但是多个参数是需要定义圆括号
-      * 可选的大括号： 如果主体只包含一个语句，就不需要使用大括号
-      * 可选的返回关键字： 如果主体只有一个表达式返回值则编译器会自动返回值
-        
-2：lambda的一些示例
-     
-     lambda 的一些简单场景应用:
-      * Thread new Runnable eg:()->{statements;};
-      * Vaadin or Swing addListener eg:e->{statements;};
-      * Predicate的使用 提供or 或者and method 并传入filter.
-      * create a list after filter eg:collect(Collectors.toList())
-      * joining the list to string eg:collect(Collectors.joining(", "))
-     
+2：JPA的简单注解使用
 
-3：stream流的方法使用
+    @Entity
+    //希望把Employee变成一张数据库表
+    @Table(name = "t_employee")
+    // 配置表名，如果没有写@Table，默认使用类名做为表名
+    public class Employee {
+        @Id
+        //配置主键
+        //配置主键生成策略  @GeneratedValue(Strategy=GenerationType.AUTO) 默认值
+        //mysql:AUTO_INCREMENT自增
+        //oracle:序列
+        @GeneratedValue
+        //修改数据库列名
+        //唯一约束 UNIQUE_KEY unique = true
+        // 非空约束 nullable = false
+        @Column(name = "e_id", unique = true, nullable = false)
+        private long id;
+        private String name;
+        //修改字段的长度
+        @Column(name = "pwd", length = 20)
+        private String password;
+    
+        private Integer age;
+        private BigDecimal salary;
+        private Boolean sex;
+        //出生：年月日
+        @Temporal(TemporalType.DATE)
+        private Date birthday;
+        //会议时间： 时分秒
+        @Temporal(TemporalType.TIME)
+        private Date time;
+        //注册时间： 年月日 时分秒 默认生成时间戳
+        @Temporal(TemporalType.TIMESTAMP)
+        //注册时间不能被修改
+        @Column(updatable = false)
+        private Date createTime;
+        //大文本 oracle clob mysql longtext postgres text
+        @Lob
+        private String text;
+     }   
 
-      * stream()流 是一种来自数据源的元素队列并支持聚合操作
-      * 元素:是特定的类型对象，形成一个队列
-      * 数据源：流的来源。 可以是集合, 数组, I/O channel
-      * 聚合操作: 类似sql语句一样, 如filter/map/reduce/find/match/sorted.
-      * pipelining: 中间操作都会返回对象本身
-      * 内部迭代： stream 提供内部迭代，通过访问者模式vistor实现
-
-4：lambda在list中典型案例
-
-    lambda 在list中的应用
-      * 1： list sorted comparing
-      * 2： list filter predicate
-      * 3： list 转 map groupingby
-      * 4： list 中部分属性转map
-      * 5： list 转set
-
-5：lambda在map中的典型案例
-
-    lambda 在map中的应用
-      * 1： map 遍历与排序
-      * 2： map转list
-      * 3： map中提取value 或者key add to list
- 
-6：lambda 的简单例子
-
-      * 1：找出2011年发生的所有交易，并按交易额排序
-      * 2：交易员在哪些不同的城市工作过
-      * 3：查找所有来自剑桥的交易员，并按姓名排序
-      * 4：返回所有交易员的姓名字符串，并按字母顺序排序
-      * 5：有没有交易员在米兰工作的？
-      * 6：打印生活在剑桥的交易员的所有交易额
-      * 7：所有交易中，最高的交易额是多少
-      * 8：交易员Raoul的总额度
+3： JPA主键生成策略
+    
+    1: 四种生成策略  auto策略  table策略 sequence策略 identity策略
+    
+    主键实现的两种类型
+    1: 自然主键 有业务意义的主键
+    2: 代理主键 这个主键没有意义，用来区分数据库每行记录

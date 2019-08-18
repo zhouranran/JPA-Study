@@ -7,15 +7,17 @@ import cn.com.star.util.JPAUtil;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.persistence.*;
-import java.sql.SQLOutput;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Unit test for employee entity test.
  */
-public class EmployeeTest {
+public class EmployeeCRUDTest {
     @Before
     public void saveEmployee() {
         EntityManager entityManager = JPAUtil.getEntityManager();
@@ -25,8 +27,16 @@ public class EmployeeTest {
         transaction.begin();
 
         Employee employee = new Employee();
+        Date date = new Date();
         employee.setName("Star");
         employee.setPassword("123456");
+        employee.setAge(30);
+        employee.setBirthday(date);
+        employee.setCreateTime(date);
+        employee.setTime(date);
+        employee.setSalary(new BigDecimal(5000));
+        employee.setSex(true);
+        employee.setText("this is a demo.");
 
         //持久状态
         entityManager.persist(employee);
@@ -45,6 +55,7 @@ public class EmployeeTest {
         Employee employee = entityManager.find(Employee.class, 1L);
         if (employee != null) {
             employee.setName("star.zhong");
+            employee.setCreateTime(new Date(1000,1,1));
             entityManager.merge(employee);
             transaction.commit();
         } else {

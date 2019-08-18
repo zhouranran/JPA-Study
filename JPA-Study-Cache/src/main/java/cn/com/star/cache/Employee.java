@@ -1,4 +1,4 @@
-package cn.com.star.crud;
+package cn.com.star.cache;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
