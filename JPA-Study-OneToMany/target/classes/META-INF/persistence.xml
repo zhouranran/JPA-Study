@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+             xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <!--持久化名称 -->
+    <persistence-unit name="cn.com.star">
+        <properties>
+            <!-- 必须配置的4个连接信息-->
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost/company" />
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
+            <property name="hibernate.connection.username" value="postgres" />
+            <property name="hibernate.connection.password" value="sql" />
+
+            <!--必须配置一个方言属性 -->
+            <!-- 方言的作用： 主键的选择， 分页的sql的处理 不同的数据库需要不同的方言去解释-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL94Dialect" />
+
+
+            <!--可选配置-->
+            <!--是否显示sql -->
+            <property name="hibernate.show_sql" value="true" />
+            <!--是否自动建表 hbm 映射文件 ddl建表语句-->
+            <!-- 自动生成表策略-->
+            <!--
+                1:create-drop 先删除表-再建表-再删除表  删除时必须把EntityManagerFactory关闭 （一般不会用）
+                2:create 先删除表再建立表 （在测试环境中经常被应用）
+                3:update 如果没有表根据映射信息创建表
+                如果表里已经有这个属性，更改属性长度，不会更新到表里面 （测试和web项目中）
+                4:validate 用在系统上线或者给定了数据库
+                表不存在，会抛出异常
+            -->
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+            <!--是否格式化sql -->
+            <property name="hibernate.format_sql" value="false" />
+        </properties>
+    </persistence-unit>
+</persistence>

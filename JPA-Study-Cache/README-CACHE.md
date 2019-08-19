@@ -41,5 +41,5 @@
        * 1: 瞬时状态(transient) 没有和EntityManager发生关系，没有被持久化。
        * 2: 持久化状态(persistent) 已经和EntityManager发生关系 加入到EntityManager的一级缓存中。
        * 3: 游离状态(detached) 已经被持久化，但不被EntityManager管理。
-       * 4: 删除状态(removed) 计划被删除，entityManager.delete(Entity);
+       * 4: 删除状态(removed) 计划被删除，entityManager.delete(Entity)。
        */
