@@ -3,7 +3,7 @@ package cn.com.star.onetomany;
 import javax.persistence.*;
 
 /**
- * 多对一
+ * 一对多
  */
 @Entity
 @Table(name = "t_emp")
@@ -15,7 +15,10 @@ public class Employee {
     private String name;
     @Column(length = 20)
     private Integer age;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    //双向外键必须一致
+    @JoinColumn(name = "dep_id")
+    private Department department;
     public long getId() {
         return id;
     }
@@ -38,6 +41,14 @@ public class Employee {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @Override

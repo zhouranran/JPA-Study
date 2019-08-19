@@ -11,10 +11,12 @@ public class Department {
     private long id;
     @Column(name="dep_name", length = 150)
     private String name;
-
-    @OneToMany(fetch = FetchType.EAGER)
-    //如果没有设置joinColumn则会自动生成第三张表 t_dep_t_emp
-    @JoinColumn(name = "dep_id")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "department", cascade = CascadeType.ALL)
+    //在单向一对多中、如果没有设置joinColumn则会自动生成第三张表 t_dep_t_emp
+    //@JoinColumn(name = "dep_id")
+    //在双向一对多中,一般使用mappedBy 去关联多方department属性。
+    //双向一对多/多对一一帮是多方维护关系, 一方使用mappedBy, 使用mappedBy后一方是不能级联存储到多方外键。
+   //级联保存必须配置 mappedBy = "department", cascade = CascadeType.PERSIST
     private Set<Employee> employees;
 
     public long getId() {
