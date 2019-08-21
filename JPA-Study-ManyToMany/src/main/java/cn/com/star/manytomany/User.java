@@ -12,7 +12,7 @@ public class User {
     private long id;
     @Column(name ="user_name" ,length = 100)
     private String userName;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     //joinTable中间表信息 name=“中间表表名”
     @JoinTable(name = "t_user_role", joinColumns = @JoinColumn(name = "t_user_id"), inverseJoinColumns = @JoinColumn(name = "t_role_id"))
     Set<Role> roles = new HashSet<Role>();
@@ -39,5 +39,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                '}';
     }
 }

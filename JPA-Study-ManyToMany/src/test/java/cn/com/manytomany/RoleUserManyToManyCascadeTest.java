@@ -11,10 +11,10 @@ import javax.persistence.EntityTransaction;
 
 /**
  */
-public class RoleUserManyToManyTest {
+public class RoleUserManyToManyCascadeTest {
 
     /**
-     * 多对多
+     * 多对多级联保存
      */
     @Before
     public void saveRoleAndUser() {
@@ -41,10 +41,6 @@ public class RoleUserManyToManyTest {
         transaction.begin();
         entityManager.persist(star);
         entityManager.persist(eason);
-
-        entityManager.persist(role1);
-        entityManager.persist(role2);
-        entityManager.persist(role3);
         transaction.commit();
         entityManager.close();
 
